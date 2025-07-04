@@ -7,11 +7,13 @@ class Cuboid:
         Let Cuboid represent the basic unit of Space in a Container
         A cuboid contains only one Cargo
 
+        
+        ( x y z ) : is the coordinate of bottom left vertex
     """
     x : int
     y : int
     z : int
-    widht : int
+    width : int
     height : int
     depth : int
     volume : int
@@ -32,34 +34,28 @@ class Cuboid:
         self.z = z
         self.height = height
         self.depth = depth
-        self.widht = widht
+        self.width = widht
         self.volume = self.height * self.widht * self.depth
         self.cargo = cargo
 
-# class UnitVolume:
-#     """
-#         Unit Volume represents the basic unit of Space in the container
-#         Following the cartesian place, the units are unit cube with volume of 1 cm^3
+    def _getXSpan(self):
+        return ( self.x, self.x + self.width )
 
-#         For a container with dimensions [ width, height, depth ] => There are (width * height * depth) number of UnitVolume
+    def _getYSpan(self):
+        return ( self.y, self.y + self.height )
 
-#         Each volume can be occupied by exactly one cargo
+    def _getZSpan(self):
+        return ( self.z, self.z + self.depth )
 
-#         #     ^
-#         #     |
-#         #     |
-#         #     |
-#         #     |
-#         #     |
-#         #     |
-#         #     |___ ___ ___ ___ ___
-#         #     | 1 | 2 | 3 | 4 | 5 | 
-#         #     --------------------------
-#         #     (0, 0)
-#     """
-#     cargo : Cargo
-
-
+    def _collision_detection(
+        self, box : "Cuboid" 
+    ) -> bool:
+        """
+            Detect if given box collides with the Cuboid
+            My Naaive Principle:
+                if SpanX SpanY and SpanZ of both box interesects
+                then there is a collision
+        """
 
 class ContainerSpace:
     # SpaceMatrix: List[List[List["Cargo" | None]]]
@@ -70,6 +66,7 @@ class ContainerSpace:
     spaceAvailable : int
     contiguousSpace : List[int]
     largestCuboidAvailabe : List[Cuboid]
+    placedCuboids : List[Cuboid]
 
     def __init__(self, height, width, depth):
         self.height = height
@@ -86,11 +83,13 @@ class ContainerSpace:
             depth = depth,
             widht= width
         ))
+        self.placedCuboids = []
         # self.SpaceMatrix = [ [ [ None for x in range(self.depth) ] for y in range(self.height) ] for z in range(self.width) ] 
 
-    def isSpaceFree(
-            self, 
-            cargo : Cargo,
-    ):
-        pass
-        
+    """
+        What are the things Container Space needs to satisfy??
+            -> Needs to place the item
+            -> Check if there is a free space
+            -> If it is in sight or not?
+            -> Is there a cuboid below?
+    """
