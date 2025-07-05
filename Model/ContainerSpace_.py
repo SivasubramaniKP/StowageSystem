@@ -1,4 +1,3 @@
-from Cargo import Cargo
 from datetime import date
 from typing import List, Union, Optional
 
@@ -17,7 +16,7 @@ class Cuboid:
     height : int
     depth : int
     volume : int
-    cargo : Cargo | None
+    cargo : Union["Cargo",None] 
 
     def __init__(
             self, 
@@ -27,15 +26,17 @@ class Cuboid:
             height : int,
             depth : int,
             widht : int,
-            cargo: Cargo
+            cargo: "Cargo"
     ):
+
+        from .Cargo_ import Cargo
         self.x = x
         self.y = y
         self.z = z
         self.height = height
         self.depth = depth
         self.width = widht
-        self.volume = self.height * self.widht * self.depth
+        self.volume = self.height * self.width * self.depth
         self.cargo = cargo
 
     def _getXSpan(self):
@@ -75,14 +76,7 @@ class ContainerSpace:
         self.itemsIncluded = []
         self.spaceAvailable = self.height * self.width * self.depth
         self.contiguousSpace = self.spaceAvailable
-        self.largestCuboidsAvailabe = tuple(Cuboid(
-            x = 0,
-            y = 0,
-            z = 0,
-            height = height,
-            depth = depth,
-            widht= width
-        ))
+        self.largestCuboidsAvailabe = tuple()
         self.placedCuboids = []
         # self.SpaceMatrix = [ [ [ None for x in range(self.depth) ] for y in range(self.height) ] for z in range(self.width) ] 
 

@@ -1,6 +1,5 @@
 from datetime import date
 from typing import List, Union, Optional
-from ContainerSpace import ContainerSpace
 
 class Container:
     zone : str
@@ -8,7 +7,7 @@ class Container:
     width : int
     height : int
     depth : int
-    space : ContainerSpace
+    space : "ContainerSpace"
     def __init__(
         self,
         zone: str,
@@ -17,9 +16,15 @@ class Container:
         height: int,
         depth: int
     ):
+
+        from .ContainerSpace_ import ContainerSpace
         self.zone = zone
         self.containerId = containerId
         self.width = width
         self.height = height
         self.depth = depth
-        self.space = ContainerSpace()
+        self.space = ContainerSpace(
+            height=self.height,
+            width=self.width,
+            depth=self.depth
+        )

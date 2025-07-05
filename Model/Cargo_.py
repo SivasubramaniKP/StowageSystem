@@ -1,7 +1,6 @@
 
 from datetime import date
 from typing import List, Union, Optional
-from Container import Container
 
 class Cargo:
     _id : int
@@ -14,7 +13,7 @@ class Cargo:
     expiryDate : date
     usageLimit : int
     preferredZone : str 
-    container : Container | None
+    container : Union["Container", None] 
 
     def __init__(
         self,
@@ -30,6 +29,8 @@ class Cargo:
         preferredZone: str,
         container: Optional["Container"] = None
     ):
+        
+        from .Container_ import Container
         self._id = _id
         self.name = name
         self.width = width
@@ -44,7 +45,6 @@ class Cargo:
 
     def place_item(
             self,
-            container : Container,
-
+            container : "Container",
     ):
         pass
